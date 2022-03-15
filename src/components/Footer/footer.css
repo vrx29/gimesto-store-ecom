@@ -1,0 +1,53 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4rem;
+  padding: 2rem 3rem;
+  margin-top: 2rem;
+  color: var(--COLOR-LIGHT);
+  background-color: var(--COLOR-DARK);
+}
+
+.footer-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-item p:first-of-type {
+  margin-bottom: 2rem;
+}
+
+.footer-item p {
+  margin: 0.5rem 0;
+}
+
+.footer-love-icon {
+  margin: 0 0.5rem;
+  color: var(--COLOR-ERROR);
+}
+
+.footer-links {
+  display: flex;
+  gap: 1rem;
+  color: var(--COLOR-GRAY-300);
+}
+
+.footer-links a:hover {
+  transition: all 0.3s ease 0s;
+  color: var(--COLOR-LIGHT);
+}
+
+.footer-list {
+  list-style: none;
+}
+
+.footer-list li {
+  margin: 1rem 0;
+  color: var(--COLOR-GRAY-300);
+}
+
+.footer-list a:hover {
+  color: var(--COLOR-LIGHT);
+  transition: all 0.3s ease 0s;
+}

@@ -1,0 +1,15 @@
+.btn-icon {
+  padding: 0;
+  font-size: 1.2rem;
+}
+
+.card-ecom .card-desc {
+  white-space: nowrap;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.active {
+  color: var(--COLOR-ERROR);
+}

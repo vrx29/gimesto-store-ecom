@@ -1,0 +1,85 @@
+.banner {
+  position: relative;
+  height: 200px;
+  padding: 1rem 2rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border-radius: 1rem;
+  overflow: hidden;
+  color: var(--COLOR-LIGHT);
+  background-color: var(--COLOR-DARK);
+}
+
+.banner-badge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  border-radius: 0 0 1rem 0;
+  background-color: var(--COLOR-PRIMARY);
+}
+
+.banner-content {
+  margin-left: 7rem;
+}
+
+.banner-content p {
+  color: var(--COLOR-GRAY-200);
+  margin-bottom: 0.5rem;
+}
+
+.banner-img {
+  height: 200%;
+  object-fit: cover;
+}
+
+/* Card Banners */
+.card-banners {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+.trending-heading {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.products-cont {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Media Queries for Tablet Screen */
+
+@media screen and (min-width: 600px) and (max-width: 800px) {
+  .banner-content {
+    margin-left: 0;
+  }
+}
+
+/* Media Queries for Mobile Screen */
+
+@media screen and (max-width: 599px) {
+  .banner {
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    height: 260px;
+  }
+
+  .banner-content {
+    margin: 0;
+  }
+
+  .banner-img {
+    height: 60%;
+    object-fit: cover;
+  }
+}
