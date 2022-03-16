@@ -1,0 +1,28 @@
+.auth-cont {
+  min-width: 375px;
+  max-width: 26rem;
+  border-radius: 0.5rem;
+  margin: 2rem auto;
+  padding: 2rem 1rem;
+  box-shadow: 0px 0px 25px 10px #f8f8fb;
+}
+
+.subtext {
+  padding: 0.5rem 0;
+  color: var(--COLOR-GRAY-300);
+}
+
+.signup-form {
+  margin: 1rem 0;
+}
+
+.input-grp {
+  width: 100%;
+}
+
+.form-link {
+  margin-top: 0.3rem;
+  font-weight: 500;
+  display: inline-block;
+  color: var(--COLOR-PRIMARY);
+}

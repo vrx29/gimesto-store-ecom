@@ -1,4 +1,4 @@
-import { useState, React, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./home.css";
 import { BannerCard, ProductCard } from "../../components";
 import keyboardImg from "../../assets/banner-images/banner-keyboard.png";

@@ -13,6 +13,7 @@ import {
   getAllCategoriesHandler,
   getCategoryHandler,
 } from "./backend/controllers/CategoryController";
+import { getAllPriceRangesHandler } from "./backend/controllers/PriceRangeController";
 import {
   getAllProductsHandler,
   getProductHandler,
@@ -23,6 +24,7 @@ import {
   removeItemFromWishlistHandler,
 } from "./backend/controllers/WishlistController";
 import { categories } from "./backend/db/categories";
+import { priceRanges } from "./backend/db/priceRanges";
 import { products } from "./backend/db/products";
 import { users } from "./backend/db/users";
 
@@ -35,6 +37,7 @@ export function makeServer({ environment = "development" } = {}) {
     models: {
       product: Model,
       category: Model,
+      priceRanges: Model,
       user: Model,
       cart: Model,
       wishlist: Model,
@@ -53,6 +56,8 @@ export function makeServer({ environment = "development" } = {}) {
       );
 
       categories.forEach((item) => server.create("category", { ...item }));
+
+      priceRanges.forEach((item) => server.create("priceRange", { ...item }));
     },
 
     routes() {
@@ -68,6 +73,9 @@ export function makeServer({ environment = "development" } = {}) {
       // categories routes (public)
       this.get("/categories", getAllCategoriesHandler.bind(this));
       this.get("/categories/:categoryId", getCategoryHandler.bind(this));
+
+      // price Range routes (public)
+      this.get("/priceranges", getAllPriceRangesHandler.bind(this));
 
       // cart routes (private)
       this.get("/user/cart", getCartItemsHandler.bind(this));
