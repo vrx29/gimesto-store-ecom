@@ -1,24 +1,18 @@
 import { useState, useEffect } from "react";
 import "./home.css";
-import { BannerCard, ProductCard } from "../../components";
+import { BannerCard, Loader, ProductCard } from "../../components";
 import keyboardImg from "../../assets/banner-images/banner-keyboard.png";
 import xboxImg from "../../assets/banner-images/xbox-controller.png";
 import vrImg from "../../assets/banner-images/vr.png";
-import axios from "axios";
+import { useProducts } from "../../context/productContext";
+import { getProducts } from "../../utils/productUtils/productOps";
 
 export function Home() {
-  const [products, setProducts] = useState([]);
+  const { state, dispatch } = useProducts();
+  const { products, loading } = state;
 
   useEffect(() => {
-    (async function () {
-      try {
-        const res = await axios.get("/api/products");
-        const data = await res.data;
-        setProducts(data.products);
-      } catch (e) {
-        console.log(e);
-      }
-    })();
+    getProducts(dispatch);
   }, []);
 
   return (
@@ -54,12 +48,15 @@ export function Home() {
         </section>
         <h3 className="trending-heading">Trending Products</h3>
         <section className="products-cont">
-          {products &&
+          {loading ? (
+            <Loader />
+          ) : (
             products
               .slice(0, 5)
               .map((product) => (
                 <ProductCard key={product.id} product={product} />
-              ))}
+              ))
+          )}
         </section>
       </main>
     </>

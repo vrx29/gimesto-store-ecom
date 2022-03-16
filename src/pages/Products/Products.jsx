@@ -1,22 +1,17 @@
 import { useState, React, useEffect } from "react";
 import "./products.css";
-import { ProductCard } from "../../components";
+import { Loader, ProductCard } from "../../components";
 import { Filters } from "./components";
 import axios from "axios";
+import { useProducts } from "../../context/productContext";
+import { getProducts } from "../../utils/productUtils/productOps";
 
 export function Products() {
-  const [products, setProducts] = useState([]);
+  const { state, dispatch } = useProducts();
+  const { products, loading } = state;
 
   useEffect(() => {
-    (async function () {
-      try {
-        const res = await axios.get("/api/products");
-        const data = await res.data;
-        setProducts(data.products);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
+    getProducts(dispatch);
   }, []);
 
   return (
@@ -25,10 +20,13 @@ export function Products() {
         <Filters />
       </aside>
       <section className="products-container">
-        {products &&
+        {loading ? (
+          <Loader type="cylon" />
+        ) : (
           products.map((product) => (
             <ProductCard key={product.id} product={product} />
-          ))}
+          ))
+        )}
       </section>
     </main>
   );
