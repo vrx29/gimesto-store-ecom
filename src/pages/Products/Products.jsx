@@ -9,9 +9,13 @@ export function Products() {
 
   useEffect(() => {
     (async function () {
-      const res = await axios.get("/api/products");
-      const data = await res.data;
-      setProducts(data.products);
+      try {
+        const res = await axios.get("/api/products");
+        const data = await res.data;
+        setProducts(data.products);
+      } catch (error) {
+        console.log(error);
+      }
     })();
   }, []);
 

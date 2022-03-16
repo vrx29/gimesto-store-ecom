@@ -11,10 +11,13 @@ export function Home() {
 
   useEffect(() => {
     (async function () {
-      const res = await axios.get("/api/products");
-      const data = await res.data;
-      setProducts(data.products);
-      console.log(products);
+      try {
+        const res = await axios.get("/api/products");
+        const data = await res.data;
+        setProducts(data.products);
+      } catch (e) {
+        console.log(e);
+      }
     })();
   }, []);
 
