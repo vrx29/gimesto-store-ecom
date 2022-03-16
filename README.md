@@ -1,4 +1,3 @@
 ## Gimesto Store E-Commerce
 
-This is an Ecommerce app 
-
+This is an Ecommerce app
