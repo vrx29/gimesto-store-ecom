@@ -1,0 +1,21 @@
+.products-cont {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.wishlist-item-count {
+  font-size: 1rem;
+  color: var(--COLOR-GRAY-300);
+  font-weight: 300;
+}
+
+.btn-icon {
+  padding: 0;
+  font-size: 1.2rem;
+}
+
+.card-footer .active {
+  color: var(--COLOR-ERROR);
+}

@@ -1,28 +1,32 @@
 import "./App.css";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { Footer, Navbar } from "./components";
+import { Route, Routes } from "react-router-dom";
+import {
+  Cart,
+  Home,
+  WishList,
+  Error404,
+  Products,
+  SignUp,
+  Login,
+} from "./pages";
 
 function App() {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    axios.get("/api/products").then((res) => {
-      setData(res.data.products);
-      console.log(res.data.products);
-    });
-  }, []);
-
   return (
-    <div className="App">
-      Welcome to Gimesto Store
-      <div>
-        {data &&
-          data.map((item) => (
-            <div>
-              <p>{item.name}</p>
-            </div>
-          ))}
-      </div>
-    </div>
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/wishlist" element={<WishList />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="*" element={<Error404 />} />
+      </Routes>
+      <Footer />
+    </>
   );
 }
 
