@@ -8,12 +8,8 @@ import { useProducts } from "../../context/productContext";
 import { getProducts } from "../../utils/productUtils/productOps";
 
 export function Home() {
-  const { state, dispatch } = useProducts();
-  const { products, loading } = state;
-
-  useEffect(() => {
-    getProducts(dispatch);
-  }, []);
+  const { productState } = useProducts();
+  const { data: products, loading } = productState;
 
   return (
     <>
