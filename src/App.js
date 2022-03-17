@@ -1,4 +1,5 @@
 import "./App.css";
+import { useEffect } from "react";
 import { Footer, Navbar } from "./components";
 import { Route, Routes } from "react-router-dom";
 import {
@@ -10,6 +11,7 @@ import {
   SignUp,
   Login,
 } from "./pages";
+import { getProducts } from "./utils/productUtils/productOps";
 
 function App() {
   return (
