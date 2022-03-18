@@ -29,6 +29,6 @@ export const priceRanges = [
   {
     _id: uuid(),
     low: 40000,
-    high: Infinity,
+    high: 100000,
   },
 ];

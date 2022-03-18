@@ -11,7 +11,7 @@ import {
   SignUp,
   Login,
 } from "./pages";
-import { getProducts } from "./utils/productUtils/productOps";
+import { FilterProvider } from "./context";
 
 function App() {
   return (
@@ -20,7 +20,14 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/products" element={<Products />} />
+        <Route
+          path="/products"
+          element={
+            <FilterProvider>
+              <Products />
+            </FilterProvider>
+          }
+        />
         <Route path="/wishlist" element={<WishList />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/signup" element={<SignUp />} />

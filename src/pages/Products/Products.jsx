@@ -1,15 +1,13 @@
-import { useState, React, useEffect } from "react";
 import "./products.css";
 import { Loader, ProductCard } from "../../components";
 import { Filters } from "./components";
-import axios from "axios";
-import { useProducts } from "../../context/productContext";
-import { getProducts } from "../../utils/productUtils/productOps";
+import { useProducts } from "../../context";
+import { useFilterProducts } from "../../hooks";
 
 export function Products() {
   const { productState } = useProducts();
   const { data: products, loading } = productState;
-
+  const filteredData = useFilterProducts(products);
   return (
     <main className="shop-section">
       <aside className="filters-container">
@@ -19,7 +17,7 @@ export function Products() {
         {loading ? (
           <Loader type="cylon" />
         ) : (
-          products.map((product) => (
+          filteredData.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))
         )}

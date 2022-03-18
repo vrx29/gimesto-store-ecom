@@ -2,17 +2,18 @@ import React from "react";
 import "./cart.css";
 import { CartCard } from "./components";
 
+const data = {
+  id: 1,
+  brand: "sony",
+  name: "DualSense Gamepad",
+  price: 5999,
+  discountedPrice: 4599,
+  img: "https://rukminim1.flixcart.com/image/416/416/kzfvzww0/gamepad/b/u/i/-original-imagbg7nnjpyyrzh.jpeg?q=70",
+  category: "Gaming Accessories",
+  rating: 5,
+};
+
 export function Cart() {
-  const data = {
-    id: 1,
-    brand: "sony",
-    name: "DualSense Gamepad",
-    price: 5999,
-    discountedPrice: 4599,
-    img: "https://rukminim1.flixcart.com/image/416/416/kzfvzww0/gamepad/b/u/i/-original-imagbg7nnjpyyrzh.jpeg?q=70",
-    category: "Gaming Accessories",
-    rating: 5,
-  };
   return (
     <main className="cart-cont">
       <div className="cart-left-cont">

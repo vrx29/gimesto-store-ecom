@@ -1,11 +1,9 @@
-import { useState, useEffect } from "react";
 import "./home.css";
 import { BannerCard, Loader, ProductCard } from "../../components";
 import keyboardImg from "../../assets/banner-images/banner-keyboard.png";
 import xboxImg from "../../assets/banner-images/xbox-controller.png";
 import vrImg from "../../assets/banner-images/vr.png";
-import { useProducts } from "../../context/productContext";
-import { getProducts } from "../../utils/productUtils/productOps";
+import { useProducts } from "../../context";
 
 export function Home() {
   const { productState } = useProducts();
