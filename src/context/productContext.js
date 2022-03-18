@@ -8,11 +8,11 @@ const ProductContext = createContext({
 });
 
 const ProductProvider = ({ children }) => {
-  // const [state, dispatch] = useReducer(productReducer, initialState);
   const apiData = {
     api: "/api/products",
     property: "products",
   };
+
   const { state: productState, dispatch: productDispatch } =
     useFetchApi(apiData);
 

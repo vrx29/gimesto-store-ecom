@@ -1,7 +1,7 @@
 import React from "react";
 import { HeartIcon } from "../../../../assets/icons";
 
-export function CartCard({ brand, name, img, price, discountedPrice }) {
+export function CartCard({ brand, name, price, discountedPrice, img }) {
   return (
     <div className="cart-item">
       <div className="cart-item-img">
@@ -10,7 +10,7 @@ export function CartCard({ brand, name, img, price, discountedPrice }) {
       <div className="cart-item-details">
         <div>
           <h6 className="cart-item-title">{brand}</h6>
-          <p className="cart-item-desc">{product.name}</p>
+          <p className="cart-item-desc">{name}</p>
           <div className="cart-item-price">
             <span className="price-new">₹ {discountedPrice}</span>
             <span className="price-old">₹ {price}</span>
