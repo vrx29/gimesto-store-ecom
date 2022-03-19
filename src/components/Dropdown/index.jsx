@@ -36,7 +36,7 @@ export function DropdownMenu(props) {
           </Link>
         </li>
         <li>
-          <Link to="/account" className="dropdown-menu-item" onClick={logout}>
+          <Link to="/" className="dropdown-menu-item" onClick={logout}>
             <span>
               <LogoutIcon />
             </span>

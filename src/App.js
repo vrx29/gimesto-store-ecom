@@ -29,7 +29,6 @@ function App() {
             </FilterProvider>
           }
         />
-        {/* <Route path="/cart" element={<Cart />} /> */}
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route

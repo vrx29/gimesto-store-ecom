@@ -1,18 +1,28 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./login.css";
 import { useAuthHandler } from "../../hooks";
 import { Loader } from "../../components/Loader";
 
 export function Login() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   const { formState, handleLoginFormSubmit, handleInputChange } =
     useAuthHandler();
+
+  const loginHandler = (e) => {
+    e.preventDefault();
+    handleLoginFormSubmit();
+    navigate(from, { replace: true });
+  };
+
   return (
     <main>
       <div className="auth-cont">
         <h5>Log in</h5>
         <p className="subtext">Please login using account detail bellow.</p>
-        <form className="signup-form" onSubmit={handleLoginFormSubmit}>
+        <form className="signup-form" onSubmit={loginHandler}>
           <div className="input-grp">
             <label>Email address</label>
             <input

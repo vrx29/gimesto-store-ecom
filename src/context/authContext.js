@@ -13,6 +13,7 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     setUserAuthState({ ...authData });
+    return () => {};
   }, []);
 
   return (

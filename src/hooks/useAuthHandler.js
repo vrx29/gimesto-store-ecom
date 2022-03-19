@@ -72,7 +72,6 @@ export const useAuthHandler = () => {
       const res = await axios.post(api, { ...data });
 
       setCookie(res.data.encodedToken, res.data[userType].firstName);
-
       formDispatch({ type: "SET_LOADING", payload: false });
     } catch (error) {
       console.log(error);
@@ -85,9 +84,7 @@ export const useAuthHandler = () => {
     deleteCookie();
   };
 
-  const handleLoginFormSubmit = (e) => {
-    e.preventDefault();
-
+  const handleLoginFormSubmit = () => {
     if ([email, password].includes("")) {
       setError("Please enter data in all input fields");
     } else if (!validateEmail(email)) {
@@ -107,8 +104,7 @@ export const useAuthHandler = () => {
     }
   };
 
-  const handleSignUpFormSubmit = (e) => {
-    e.preventDefault();
+  const handleSignUpFormSubmit = () => {
     if ([firstName, lastName, email, password, confirmPassword].includes("")) {
       setError("Please enter data in all input fields");
     } else if (!validateEmail(email)) {
