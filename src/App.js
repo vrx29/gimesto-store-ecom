@@ -1,5 +1,4 @@
 import "./App.css";
-import { useEffect } from "react";
 import { Footer, Navbar } from "./components";
 import { Route, Routes } from "react-router-dom";
 import {
@@ -10,8 +9,10 @@ import {
   Products,
   SignUp,
   Login,
+  MockmanPage,
 } from "./pages";
 import { FilterProvider } from "./context";
+import { PrivateRoute } from "./routes/PrivateRoute";
 
 function App() {
   return (
@@ -28,10 +29,25 @@ function App() {
             </FilterProvider>
           }
         />
-        <Route path="/wishlist" element={<WishList />} />
-        <Route path="/cart" element={<Cart />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
+        <Route
+          path="/wishlist"
+          element={
+            <PrivateRoute>
+              <WishList />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <PrivateRoute>
+              <Cart />
+            </PrivateRoute>
+          }
+        />
+        <Route path="/mockman" element={<MockmanPage />} />
         <Route path="*" element={<Error404 />} />
       </Routes>
       <Footer />

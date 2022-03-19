@@ -1,8 +1,20 @@
-import React, { useReducer } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Loader } from "../../components/Loader";
+import { useAuthHandler } from "../../hooks";
 import "./signup.css";
 
 export function SignUp() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  const { formState, handleInputChange, handleSignUpFormSubmit } =
+    useAuthHandler();
+
+  const signUpHandler = (e) => {
+    e.preventDefault();
+    handleSignUpFormSubmit();
+    navigate(from, { replace: true }); //After success send back to previous router from where it was routed here
+  };
   return (
     <main>
       <div className="auth-cont">
@@ -10,28 +22,71 @@ export function SignUp() {
         <p className="subtext">
           Please create your account by filling the required details.
         </p>
-        <form className="signup-form">
+        <form className="signup-form" onSubmit={signUpHandler}>
           <div className="input-grp">
             <label>First name</label>
-            <input className="input" type="text" placeholder="First name" />
+            <input
+              name="firstName"
+              className="input"
+              type="text"
+              placeholder="First name"
+              onChange={handleInputChange}
+            />
           </div>
           <div className="input-grp">
             <label>Last name</label>
-            <input className="input" type="text" placeholder="Last name" />
+            <input
+              name="lastName"
+              className="input"
+              type="text"
+              placeholder="Last name"
+              onChange={handleInputChange}
+            />
           </div>
           <div className="input-grp">
             <label>Email address</label>
-            <input className="input" type="email" placeholder="Email address" />
+            <input
+              name="email"
+              className="input"
+              type="text"
+              placeholder="Email address"
+              onChange={handleInputChange}
+            />
           </div>
           <div className="input-grp">
             <label>Password</label>
-            <input className="input" type="password" placeholder="Password" />
+            <input
+              name="password"
+              className="input"
+              type="password"
+              placeholder="Password"
+              onChange={handleInputChange}
+            />
           </div>
           <div className="input-grp">
             <label>Confirm Password</label>
-            <input className="input" type="password" placeholder="Password" />
+            <input
+              name="confirmPassword"
+              className="input"
+              type="password"
+              placeholder="Password"
+              onChange={handleInputChange}
+            />
           </div>
-          <button className="btn btn-primary btn-order">Sign Up</button>
+          {formState.error && (
+            <div className="txt-error">{formState.errorMsg}</div>
+          )}
+          <button
+            className="btn btn-primary btn-order"
+            type="submit"
+            disabled={formState.loading}
+          >
+            {formState.loading ? (
+              <Loader color="#fff" height="20px" />
+            ) : (
+              "Sign Up"
+            )}
+          </button>
         </form>
         <p>
           Already have an account? &nbsp;
