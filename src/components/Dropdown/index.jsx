@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 export function DropdownMenu(props) {
   const ref = useRef(null);
-  const { show, onClickOutside } = props;
+  const { show, onClickOutside, logout } = props;
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -36,7 +36,7 @@ export function DropdownMenu(props) {
           </Link>
         </li>
         <li>
-          <Link to="/account" className="dropdown-menu-item">
+          <Link to="/account" className="dropdown-menu-item" onClick={logout}>
             <span>
               <LogoutIcon />
             </span>

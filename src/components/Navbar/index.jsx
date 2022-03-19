@@ -5,10 +5,14 @@ import avatar from "../../assets/avatars/avataaars.png";
 import { GimestoLogo } from "../../assets/logo/logo";
 import { Link } from "react-router-dom";
 import { DropdownMenu } from "../Dropdown";
+import { useAuth } from "../../context";
+import { useAuthHandler } from "../../hooks";
 
 export function Navbar() {
+  const { userAuthState } = useAuth();
+  const { handleLogout } = useAuthHandler();
   const [showDropdown, setShowDropdown] = useState(false);
-  const login = false;
+  const login = true;
   return (
     <header className="navbar">
       <div className="logo">
@@ -33,15 +37,16 @@ export function Navbar() {
           <CartIcon />
           <span>Cart</span>
         </Link>
-        {login ? (
+        {userAuthState?.isLoggedIn ? (
           <>
             <div className="profile" onClick={() => setShowDropdown(true)}>
               <img className="avatar avatar-xs" src={avatar} alt="avatar" />
-              <span>Vineet</span>
+              <span>{userAuthState.user}</span>
               {showDropdown && (
                 <DropdownMenu
                   show={showDropdown}
                   onClickOutside={() => setShowDropdown(false)}
+                  logout={handleLogout}
                 />
               )}
             </div>

@@ -5,3 +5,4 @@ export { WishList } from "./WishList/WishList";
 export { Cart } from "./Cart/Cart";
 export { SignUp } from "./SignUp/SignUp";
 export { Login } from "./Login/Login";
+export { MockmanPage } from "./Mockman";
