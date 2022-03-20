@@ -11,15 +11,19 @@ import avatar from "../../assets/avatars/avataaars.png";
 import { GimestoLogo } from "../../assets/logo/logo";
 import { Link } from "react-router-dom";
 import { DropdownMenu } from "../Dropdown";
-import { useAuth, useWishList } from "../../context";
+import { useAuth, useCart, useWishList } from "../../context";
 import { useAuthHandler } from "../../hooks";
 
 export function Navbar() {
   const { userAuthState } = useAuth();
   const { handleLogout } = useAuthHandler();
   const [showDropdown, setShowDropdown] = useState(false);
-  const { wishlistState } = useWishList();
-  const { data: wishlist } = wishlistState;
+  const {
+    wishlistState: { data: wishlist },
+  } = useWishList();
+  const {
+    cartState: { data: cart },
+  } = useCart();
   return (
     <header className="navbar">
       <div className="logo">
@@ -44,6 +48,9 @@ export function Navbar() {
         </Link>
         <Link to="/cart" className="badge">
           <CartIcon />
+          {cart.length !== 0 && (
+            <div className="badge-count badge-cart">{cart.length}</div>
+          )}
           <span>Cart</span>
         </Link>
         {userAuthState?.isLoggedIn ? (

@@ -2,10 +2,18 @@ import React from "react";
 import "./product-card.css";
 import { HeartIcon } from "../../assets/icons";
 import PropTypes from "prop-types";
-import { useWishList } from "../../context";
+import { useCart, useWishList } from "../../context";
+import { useCartHandler } from "../../hooks";
+import { Link } from "react-router-dom";
+import { calcDiscount } from "../../utils/generalUtils";
 
 export function ProductCard({ product }) {
   const { wishlistState, addToWishlist, deleteFromWishlist } = useWishList();
+  const {
+    cartState: { data: cart },
+  } = useCart();
+  const { addToCart } = useCartHandler();
+  const discount = calcDiscount(product.price, product.discountedPrice);
   return (
     <div className="card card-ecom">
       <div className="card-img-cont">
@@ -17,13 +25,25 @@ export function ProductCard({ product }) {
           <h6 className="card-title">{product.brand}</h6>
           <p className="card-desc">{product.name}</p>
           <div className="card-price">
-            <span className="price-new">Rs.{product.discountedPrice}</span>
-            <span className="price-old">Rs.{product.price}</span>
-            <span className="discount">({24})%</span>
+            <span className="price-new">₹ {product.discountedPrice}</span>
+            <span className="price-old">₹ {product.price}</span>
+            <span className="discount">({discount})%</span>
           </div>
         </div>
         <div className="card-footer">
-          <button className="btn btn-primary">ADD TO CART</button>
+          {cart.some((item) => item._id === product._id) ? (
+            <Link to="/cart">
+              <button className="btn outline">GO TO CART</button>
+            </Link>
+          ) : (
+            <button
+              className="btn btn-primary"
+              onClick={() => addToCart(product)}
+            >
+              ADD TO CART
+            </button>
+          )}
+
           {wishlistState.data?.some((prod) => prod._id === product._id) ? (
             <button
               className="btn btn-icon active"

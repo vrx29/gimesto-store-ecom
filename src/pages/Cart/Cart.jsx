@@ -1,46 +1,60 @@
 import React from "react";
 import "./cart.css";
+import { useCart } from "../../context";
 import { CartCard } from "./components";
-
-const data = {
-  id: 1,
-  brand: "sony",
-  name: "DualSense Gamepad",
-  price: 5999,
-  discountedPrice: 4599,
-  img: "https://rukminim1.flixcart.com/image/416/416/kzfvzww0/gamepad/b/u/i/-original-imagbg7nnjpyyrzh.jpeg?q=70",
-  category: "Gaming Accessories",
-  rating: 5,
-};
+import cartEmpty from "../../assets/fallback/empty-cart.png";
+import {
+  getCartPrice,
+  getCartTotal,
+  getDiscountedTotal,
+} from "../../utils/generalUtils";
 
 export function Cart() {
+  const {
+    cartState: { data: cartItems },
+  } = useCart();
+  const cartPrice = getCartPrice(cartItems);
+  const cartDiscount = getDiscountedTotal(cartItems);
+  const cartTotal = getCartTotal(cartItems);
+
   return (
     <main className="cart-cont">
       <div className="cart-left-cont">
-        <CartCard product={data} />
+        {cartItems.length ? (
+          cartItems.map((item) => <CartCard key={item._id} product={item} />)
+        ) : (
+          <div className="cart-empty">
+            <p>Please add some items in cart first</p>
+            <img src={cartEmpty} alt="Empty cart" />
+          </div>
+        )}
       </div>
       <div className="cart-right-cont">
         <h6 className="cart-title">
           My Cart
-          <span className="item-count">1 Items</span>
+          <span className="item-count">{cartItems?.length} Items</span>
         </h6>
         <div className="order-detail-item">
           <span>Price</span>
-          <span>₹ 12000</span>
+          <span className="txt-success">₹ {cartPrice}</span>
         </div>
         <div className="order-detail-item">
-          <span>Discount</span>
-          <span className="discount">₹</span>
+          <span>Discounted Price</span>
+          <span className="txt-success discount">₹ {cartDiscount}</span>
         </div>
         <div className="order-detail-item">
           <span>Delivery Charge</span>
-          <span>₹ 25612</span>
+          <span>₹ {cartTotal > 0 ? 200 : 0}</span>
         </div>
         <div className="order-detail-item">
           <span>Total Amount</span>
-          <span>₹ 4555</span>
+          <span className="txt-success">₹ {cartTotal}</span>
         </div>
-        <p>You will save ₹200 on this purchase</p>
+        <p>
+          You will save &nbsp;
+          <span className="txt-warning">₹ {cartPrice - cartDiscount}</span> on
+          this purchase
+        </p>
         <button className="btn btn-primary btn-order">Place Order</button>
       </div>
     </main>

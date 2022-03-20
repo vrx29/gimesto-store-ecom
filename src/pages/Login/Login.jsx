@@ -14,7 +14,6 @@ export function Login() {
   const { formState, handleLoginFormSubmit, handleInputChange } =
     useAuthHandler();
 
-  console.log(from);
   useEffect(() => {
     userAuthState.isLoggedIn && navigate(from, { replace: true });
   }, []);

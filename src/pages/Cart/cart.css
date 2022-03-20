@@ -25,7 +25,7 @@
 }
 
 .cart-item .cart-item-img {
-  max-width: 40%;
+  width: 40%;
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -33,7 +33,7 @@
 }
 .cart-item-img img {
   object-fit: cover;
-  width: 80%;
+  max-height: 95%;
 }
 .cart-item-details {
   padding: 1rem;
