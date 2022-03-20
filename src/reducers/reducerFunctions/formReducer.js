@@ -13,6 +13,8 @@ export const formReducer = (state, { type, payload }) => {
         ...state,
         loading: payload,
       };
+    case "SUBMIT_SUCCESS":
+      return { ...state, success: true };
     default:
       return { ...state };
   }

@@ -1,18 +1,25 @@
 import React, { useState } from "react";
 import "./navbar.css";
-import { CartIcon, MenuIcon, ShopIcon, WishListIcon } from "../../assets/icons";
+import {
+  Avatar,
+  CartIcon,
+  MenuIcon,
+  ShopIcon,
+  WishListIcon,
+} from "../../assets/icons";
 import avatar from "../../assets/avatars/avataaars.png";
 import { GimestoLogo } from "../../assets/logo/logo";
 import { Link } from "react-router-dom";
 import { DropdownMenu } from "../Dropdown";
-import { useAuth } from "../../context";
+import { useAuth, useWishList } from "../../context";
 import { useAuthHandler } from "../../hooks";
 
 export function Navbar() {
   const { userAuthState } = useAuth();
   const { handleLogout } = useAuthHandler();
   const [showDropdown, setShowDropdown] = useState(false);
-  const login = true;
+  const { wishlistState } = useWishList();
+  const { data: wishlist } = wishlistState;
   return (
     <header className="navbar">
       <div className="logo">
@@ -30,7 +37,9 @@ export function Navbar() {
         </Link>
         <Link to="wishlist" className="badge">
           <WishListIcon />
-
+          {wishlist.length !== 0 && (
+            <div className="badge-count">{wishlist.length}</div>
+          )}
           <span>Wishlist</span>
         </Link>
         <Link to="/cart" className="badge">
@@ -41,6 +50,7 @@ export function Navbar() {
           <>
             <div className="profile" onClick={() => setShowDropdown(true)}>
               <img className="avatar avatar-xs" src={avatar} alt="avatar" />
+              {/* <Avatar /> */}
               <span>{userAuthState.user}</span>
               {showDropdown && (
                 <DropdownMenu
@@ -52,8 +62,8 @@ export function Navbar() {
             </div>
           </>
         ) : (
-          <Link to="/signup">
-            <button className="btn btn-primary">Sign Up</button>
+          <Link to="/login">
+            <button className="btn btn-primary">Log in</button>
           </Link>
         )}
         <button className="nav-menu">

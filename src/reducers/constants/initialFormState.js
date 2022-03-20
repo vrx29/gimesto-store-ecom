@@ -7,4 +7,5 @@ export const initialFormState = {
   error: false,
   errorMsg: "",
   loading: false,
+  success: false,
 };

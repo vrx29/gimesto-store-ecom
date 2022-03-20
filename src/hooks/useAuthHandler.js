@@ -70,13 +70,18 @@ export const useAuthHandler = () => {
     try {
       formDispatch({ type: "SET_LOADING", payload: true });
       const res = await axios.post(api, { ...data });
-
+      console.log("succ");
       setCookie(res.data.encodedToken, res.data[userType].firstName);
       formDispatch({ type: "SET_LOADING", payload: false });
+      if (res.status === 200) {
+        formDispatch({
+          type: "SUBMIT_SUCCESS",
+        });
+      }
     } catch (error) {
-      console.log(error);
       setError("Something went wrong while connecting to server");
       formDispatch({ type: "SET_LOADING", payload: false });
+      console.log("err");
     }
   };
 
@@ -90,9 +95,6 @@ export const useAuthHandler = () => {
     } else if (!validateEmail(email)) {
       setError("Please enter email in correct format");
     } else {
-      formDispatch({
-        type: "SET_FORM_SUCCESS",
-      });
       getAuthFromServer(
         "/api/auth/login",
         {

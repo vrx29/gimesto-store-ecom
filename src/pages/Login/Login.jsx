@@ -3,18 +3,31 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./login.css";
 import { useAuthHandler } from "../../hooks";
 import { Loader } from "../../components/Loader";
+import { useEffect } from "react";
+import { useAuth } from "../../context";
 
 export function Login() {
+  const { userAuthState } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from.pathname || "/";
   const { formState, handleLoginFormSubmit, handleInputChange } =
     useAuthHandler();
+
+  console.log(from);
+  useEffect(() => {
+    userAuthState.isLoggedIn && navigate(from, { replace: true });
+  }, []);
+
+  useEffect(() => {
+    if (formState.success) {
+      navigate(from, { replace: true });
+    }
+  }, [formState.success]);
 
   const loginHandler = (e) => {
     e.preventDefault();
     handleLoginFormSubmit();
-    navigate(from, { replace: true });
   };
 
   return (

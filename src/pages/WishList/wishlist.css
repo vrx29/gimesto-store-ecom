@@ -19,3 +19,7 @@
 .card-footer .active {
   color: var(--COLOR-ERROR);
 }
+
+.wishlist-msg {
+  margin: 2rem;
+}

@@ -2,8 +2,10 @@ import React from "react";
 import "./product-card.css";
 import { HeartIcon } from "../../assets/icons";
 import PropTypes from "prop-types";
+import { useWishList } from "../../context";
 
 export function ProductCard({ product }) {
+  const { wishlistState, addToWishlist, deleteFromWishlist } = useWishList();
   return (
     <div className="card card-ecom">
       <div className="card-img-cont">
@@ -22,10 +24,21 @@ export function ProductCard({ product }) {
         </div>
         <div className="card-footer">
           <button className="btn btn-primary">ADD TO CART</button>
-
-          <button className="btn btn-icon active">
-            <HeartIcon />
-          </button>
+          {wishlistState.data?.some((prod) => prod._id === product._id) ? (
+            <button
+              className="btn btn-icon active"
+              onClick={() => deleteFromWishlist(product._id)}
+            >
+              <HeartIcon />
+            </button>
+          ) : (
+            <button
+              className="btn btn-icon"
+              onClick={() => addToWishlist(product)}
+            >
+              <HeartIcon />
+            </button>
+          )}
         </div>
       </div>
     </div>
