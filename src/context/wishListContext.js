@@ -3,7 +3,6 @@ import { useFetchApi } from "../hooks/useFetchApi";
 import { useAuth } from "./";
 import { initialSharedState } from "../reducers/constants";
 import { sharedReducer } from "../reducers/reducerFunctions/sharedReducer";
-import jwt from "jsonwebtoken";
 import axios from "axios";
 
 const WishListContext = createContext();
@@ -20,11 +19,12 @@ const WishListProvider = ({ children }) => {
   const { userAuthState } = useAuth();
   const { authToken } = userAuthState;
 
-  const { state } = useFetchApi(apiData, {
+  const config = {
     headers: {
       authorization: authToken,
     },
-  });
+  };
+  useFetchApi(apiData, config);
 
   const addToWishlist = async (product) => {
     try {
@@ -33,11 +33,7 @@ const WishListProvider = ({ children }) => {
         {
           product,
         },
-        {
-          headers: {
-            authorization: authToken,
-          },
-        }
+        config
       );
       wishlistDispatch({ type: "SET_DATA", payload: res.data.wishlist });
     } catch (error) {
@@ -50,16 +46,12 @@ const WishListProvider = ({ children }) => {
 
   const deleteFromWishlist = async (productId) => {
     try {
-      const res = await axios.delete(`/api/user/wishlist/${productId}`, {
-        headers: {
-          authorization: authToken,
-        },
-      });
+      const res = await axios.delete(`/api/user/wishlist/${productId}`, config);
       wishlistDispatch({ type: "SET_DATA", payload: res.data.wishlist });
     } catch (error) {
       wishlistDispatch({
         type: "SET_ERROR",
-        payload: "Error occured while adding item to wishlist",
+        payload: "Error occured while deleting item to wishlist",
       });
     }
   };
