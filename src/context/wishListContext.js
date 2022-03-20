@@ -40,7 +40,6 @@ const WishListProvider = ({ children }) => {
         }
       );
       wishlistDispatch({ type: "SET_DATA", payload: res.data.wishlist });
-      console.log(wishlistState.data);
     } catch (error) {
       wishlistDispatch({
         type: "SET_ERROR",
@@ -57,7 +56,6 @@ const WishListProvider = ({ children }) => {
         },
       });
       wishlistDispatch({ type: "SET_DATA", payload: res.data.wishlist });
-      console.log(wishlistState.data);
     } catch (error) {
       wishlistDispatch({
         type: "SET_ERROR",
