@@ -5,3 +5,4 @@ export { WishListIcon } from "./WishListIcon";
 export { HeartIcon } from "./HeartIcon";
 export { Person } from "./Person";
 export { OrderIcon } from "./OrderIcon";
+export { Avatar } from "./Avatar";
