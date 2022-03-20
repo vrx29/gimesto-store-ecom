@@ -73,9 +73,11 @@ export const useAuthHandler = () => {
       console.log("succ");
       setCookie(res.data.encodedToken, res.data[userType].firstName);
       formDispatch({ type: "SET_LOADING", payload: false });
-      formDispatch({
-        type: "SUBMIT_SUCCESS",
-      });
+      if (res.status === 200) {
+        formDispatch({
+          type: "SUBMIT_SUCCESS",
+        });
+      }
     } catch (error) {
       setError("Something went wrong while connecting to server");
       formDispatch({ type: "SET_LOADING", payload: false });
