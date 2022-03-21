@@ -1,7 +1,20 @@
 import React from "react";
 import { HeartIcon } from "../../../../assets/icons";
+import { useWishList } from "../../../../context";
+import { useCartHandler } from "../../../../hooks";
+import { calcDiscount } from "../../../../utils/generalUtils";
+// import { calcDiscount } from "src/";
 
-export function CartCard({ brand, name, price, discountedPrice, img }) {
+export function CartCard({ product }) {
+  const { _id, img, brand, name, discountedPrice, price, qty } = product;
+  const { deleteFromCart, updateCart } = useCartHandler();
+  const discount = calcDiscount(price, discountedPrice);
+  const {
+    wishlistState: { data: wishlist },
+    addToWishlist,
+    deleteFromWishlist,
+  } = useWishList();
+
   return (
     <div className="cart-item">
       <div className="cart-item-img">
@@ -14,17 +27,42 @@ export function CartCard({ brand, name, price, discountedPrice, img }) {
           <div className="cart-item-price">
             <span className="price-new">₹ {discountedPrice}</span>
             <span className="price-old">₹ {price}</span>
-            <span className="discount">(24%)</span>
+            <span className="discount">({discount}%)</span>
           </div>
         </div>
         <div className="cart-item-footer">
-          <button className="btn btn-qty">-</button>
-          <span>1</span>
-          <button className="btn btn-qty">+</button>
-          <button className="btn outline">Remove from cart</button>
-          <button className="btn btn-icon active">
-            <HeartIcon />
+          <button
+            className="btn btn-qty"
+            onClick={() => updateCart(_id, "decrement")}
+          >
+            -
           </button>
+          <span>{qty}</span>
+          <button
+            className="btn btn-qty"
+            onClick={() => updateCart(_id, "increment")}
+          >
+            +
+          </button>
+          <button className="btn outline" onClick={() => deleteFromCart(_id)}>
+            Remove from cart
+          </button>
+
+          {wishlist?.some((prod) => prod._id === product._id) ? (
+            <button
+              className="btn btn-icon active"
+              onClick={() => deleteFromWishlist(product._id)}
+            >
+              <HeartIcon />
+            </button>
+          ) : (
+            <button
+              className="btn btn-icon"
+              onClick={() => addToWishlist(product)}
+            >
+              <HeartIcon />
+            </button>
+          )}
         </div>
       </div>
     </div>

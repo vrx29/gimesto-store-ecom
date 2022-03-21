@@ -11,10 +11,13 @@ export function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from.pathname || "/";
-  const { formState, handleLoginFormSubmit, handleInputChange } =
-    useAuthHandler();
+  const {
+    formState,
+    handleLoginFormSubmit,
+    handleInputChange,
+    setUpTestLogin,
+  } = useAuthHandler();
 
-  console.log(from);
   useEffect(() => {
     userAuthState.isLoggedIn && navigate(from, { replace: true });
   }, []);
@@ -43,6 +46,7 @@ export function Login() {
               type="email"
               placeholder="Email address"
               name="email"
+              value={formState.email}
               onChange={handleInputChange}
             />
           </div>
@@ -53,6 +57,7 @@ export function Login() {
               type="password"
               placeholder="Password"
               name="password"
+              value={formState.password}
               onChange={handleInputChange}
             />
           </div>
@@ -72,6 +77,9 @@ export function Login() {
             ) : (
               "Log in"
             )}
+          </button>
+          <button className="btn outline btn-order" onClick={setUpTestLogin}>
+            Sign In as Guest User
           </button>
         </form>
         <p>

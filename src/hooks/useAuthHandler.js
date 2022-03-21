@@ -6,10 +6,17 @@ import { formReducer } from "../reducers/reducerFunctions";
 import { validateEmail } from "../utils/generalUtils";
 
 export const useAuthHandler = () => {
-  const { userAuthState, setUserAuthState } = useAuth();
+  const { setUserAuthState } = useAuth();
   const [formState, formDispatch] = useReducer(formReducer, initialFormState);
   const { firstName, lastName, email, password, confirmPassword } = formState;
 
+  const setUpTestLogin = (e) => {
+    e.preventDefault();
+    formDispatch({
+      type: "SET_FORM_DATA",
+      payload: { email: "vineet@gmail.com", password: "vineet123" },
+    });
+  };
   const setError = (msg) => {
     formDispatch({
       type: "SET_FORM_ERROR",
@@ -137,5 +144,6 @@ export const useAuthHandler = () => {
     getCookie,
     handleLoginFormSubmit,
     handleLogout,
+    setUpTestLogin,
   };
 };
