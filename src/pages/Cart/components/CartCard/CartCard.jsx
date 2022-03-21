@@ -3,6 +3,7 @@ import { HeartIcon } from "../../../../assets/icons";
 import { useWishList } from "../../../../context";
 import { useCartHandler } from "../../../../hooks";
 import { calcDiscount } from "../../../../utils/generalUtils";
+// import { calcDiscount } from "src/";
 
 export function CartCard({ product }) {
   const { _id, img, brand, name, discountedPrice, price, qty } = product;

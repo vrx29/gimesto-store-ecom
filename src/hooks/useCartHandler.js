@@ -74,6 +74,9 @@ export const useCartHandler = () => {
         config
       );
 
+      if (res.data.cart.some((item) => item.qty === 0)) {
+        deleteFromCart(productId);
+      }
       if (res.status === 200) {
         cartDispatch({ type: "SET_DATA", payload: res.data.cart });
         cartDispatch({ type: "SET_SUCCESS" });
