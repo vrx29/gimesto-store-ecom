@@ -4,9 +4,11 @@ import keyboardImg from "../../assets/banner-images/banner-keyboard.png";
 import xboxImg from "../../assets/banner-images/xbox-controller.png";
 import vrImg from "../../assets/banner-images/vr.png";
 import { useProducts } from "../../context";
+import { useSearchParams } from "react-router-dom";
 
 export function Home() {
   const { productState } = useProducts();
+  const [_, setSearchParams] = useSearchParams();
   const { data: products, loading } = productState;
 
   return (
