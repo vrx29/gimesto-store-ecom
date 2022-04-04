@@ -1,6 +1,6 @@
 <div align="center">
 
-<img alt="dekho video logo" src="public/favicon.png" width="40px" height="40px" />
+<img alt="Gimesto Store logo" src="public/favicon.png" width="40px" height="40px" />
 
 # Gimesto Store
 
