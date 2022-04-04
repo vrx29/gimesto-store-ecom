@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 import "./navbar.css";
-import {
-  Avatar,
-  CartIcon,
-  MenuIcon,
-  ShopIcon,
-  WishListIcon,
-} from "../../assets/icons";
+import { CartIcon, MenuIcon, ShopIcon, WishListIcon } from "../../assets/icons";
 import avatar from "../../assets/avatars/avataaars.png";
 import { GimestoLogo } from "../../assets/logo/logo";
 import { Link } from "react-router-dom";
@@ -21,9 +15,11 @@ export function Navbar() {
   const {
     wishlistState: { data: wishlist },
   } = useWishList();
+
   const {
     cartState: { data: cart },
   } = useCart();
+
   return (
     <header className="navbar">
       <div className="logo">
@@ -41,14 +37,14 @@ export function Navbar() {
         </Link>
         <Link to="wishlist" className="badge">
           <WishListIcon />
-          {wishlist.length !== 0 && (
+          {userAuthState?.isLoggedIn && wishlist.length !== 0 && (
             <div className="badge-count">{wishlist.length}</div>
           )}
           <span>Wishlist</span>
         </Link>
         <Link to="/cart" className="badge">
           <CartIcon />
-          {cart.length !== 0 && (
+          {userAuthState?.isLoggedIn && cart.length !== 0 && (
             <div className="badge-count badge-cart">{cart.length}</div>
           )}
           <span>Cart</span>
@@ -57,7 +53,6 @@ export function Navbar() {
           <>
             <div className="profile" onClick={() => setShowDropdown(true)}>
               <img className="avatar avatar-xs" src={avatar} alt="avatar" />
-              {/* <Avatar /> */}
               <span>{userAuthState.user}</span>
               {showDropdown && (
                 <DropdownMenu
