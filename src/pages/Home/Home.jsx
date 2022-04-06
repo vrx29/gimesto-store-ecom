@@ -4,12 +4,18 @@ import keyboardImg from "../../assets/banner-images/banner-keyboard.png";
 import xboxImg from "../../assets/banner-images/xbox-controller.png";
 import vrImg from "../../assets/banner-images/vr.png";
 import { useProducts } from "../../context";
-import { useSearchParams } from "react-router-dom";
+import { createSearchParams, useNavigate } from "react-router-dom";
 
 export function Home() {
+  const navigate = useNavigate();
   const { productState } = useProducts();
-  const [_, setSearchParams] = useSearchParams();
   const { data: products, loading } = productState;
+
+  const goToPosts = (params) =>
+    navigate({
+      pathname: "/products",
+      search: `?${createSearchParams(params)}`,
+    });
 
   return (
     <>
@@ -25,6 +31,7 @@ export function Home() {
             src={keyboardImg}
             alt="keychron keyboard"
             loading="lazy"
+            onClick={() => goToPosts({ categories: "Gaming Accessories" })}
           />
         </section>
         <section className="card-banners">
@@ -33,6 +40,7 @@ export function Home() {
             img={xboxImg}
             category="Gaming Accessories"
             description="Xbox 360 wireless controller"
+            onClick={() => goToPosts({ categories: "Gaming Accessories" })}
           />
           <BannerCard
             trending={true}
@@ -40,6 +48,7 @@ export function Home() {
             img={vrImg}
             category="Virtual Reality"
             description="Virtual Reality devices for gaming"
+            onClick={() => goToPosts({ categories: "Gaming Accessories" })}
           />
         </section>
         <h3 className="trending-heading">Trending Products</h3>

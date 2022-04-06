@@ -8,9 +8,10 @@ export function BannerCard({
   img,
   category,
   description,
+  onClick,
 }) {
   return (
-    <div className={`card-banner background-${background}`}>
+    <div className={`card-banner background-${background}`} onClick={onClick}>
       {trending && <div className="card-banner-badge">Trending</div>}
       <img
         className="card-banner-img"
