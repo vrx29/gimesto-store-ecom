@@ -1,9 +1,9 @@
 import { createContext, useContext, useReducer } from "react";
 import { useFetchApi } from "../hooks/useFetchApi";
-import { useAuth } from "./";
 import { initialSharedState } from "../reducers/constants";
 import { sharedReducer } from "../reducers/reducerFunctions/sharedReducer";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const WishListContext = createContext();
 
@@ -16,8 +16,7 @@ const WishListProvider = ({ children }) => {
     api: "/api/user/wishlist",
     property: "wishList",
   };
-  const { userAuthState } = useAuth();
-  const { authToken } = userAuthState;
+  const { authToken } = useSelector((state) => state.auth);
 
   const config = {
     headers: {

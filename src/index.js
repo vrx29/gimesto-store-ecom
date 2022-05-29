@@ -10,14 +10,17 @@ import {
   CartProvider,
   WishListProvider,
 } from "./context";
+import { Provider } from "react-redux";
+import { store } from "./redux/app/store";
 
 // Call make Server
 makeServer();
 
 ReactDOM.render(
   <React.StrictMode>
-    <ProductProvider>
-      <AuthProvider>
+    <Provider store={store}>
+      <ProductProvider>
+        {/* <AuthProvider> */}
         <WishListProvider>
           <CartProvider>
             <BrowserRouter>
@@ -25,8 +28,9 @@ ReactDOM.render(
             </BrowserRouter>
           </CartProvider>
         </WishListProvider>
-      </AuthProvider>
-    </ProductProvider>
+        {/* </AuthProvider> */}
+      </ProductProvider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );
