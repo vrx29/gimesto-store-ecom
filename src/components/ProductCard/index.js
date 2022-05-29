@@ -2,13 +2,19 @@ import React from "react";
 import "./product-card.css";
 import { HeartIcon } from "../../assets/icons";
 import PropTypes from "prop-types";
-import { useCart, useWishList } from "../../context";
+import { useCart } from "../../context";
 import { useCartHandler } from "../../hooks";
 import { Link } from "react-router-dom";
 import { calcDiscount } from "../../utils/generalUtils";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToWishlist,
+  deleteFromWishlist,
+} from "../../redux/features/wishlistSlice";
 
 export function ProductCard({ product }) {
-  const { wishlistState, addToWishlist, deleteFromWishlist } = useWishList();
+  const { data: wishlist } = useSelector((state) => state.wishlist);
+  const dispatch = useDispatch();
   const {
     cartState: { data: cart },
   } = useCart();
@@ -44,17 +50,17 @@ export function ProductCard({ product }) {
             </button>
           )}
 
-          {wishlistState.data?.some((prod) => prod._id === product._id) ? (
+          {wishlist?.some((prod) => prod._id === product._id) ? (
             <button
               className="btn btn-icon active"
-              onClick={() => deleteFromWishlist(product._id)}
+              onClick={() => dispatch(deleteFromWishlist(product._id))}
             >
               <HeartIcon />
             </button>
           ) : (
             <button
               className="btn btn-icon"
-              onClick={() => addToWishlist(product)}
+              onClick={() => dispatch(addToWishlist(product))}
             >
               <HeartIcon />
             </button>

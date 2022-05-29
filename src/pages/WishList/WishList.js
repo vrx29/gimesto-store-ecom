@@ -2,11 +2,12 @@ import React from "react";
 import "./wishlist.css";
 import wishlistEmpty from "../../assets/fallback/empty-wishlist.png";
 import { WishlistCard } from "./components";
-import { useWishList } from "../../context";
+import { useSelector } from "react-redux";
+import { deleteFromWishlist } from "../../redux/features/wishlistSlice";
 
 export function WishList() {
-  const { wishlistState, deleteFromWishlist } = useWishList();
-  const { data: products } = wishlistState;
+  const { data: products } = useSelector((state) => state.wishlist);
+
   return (
     <main>
       <h6>

@@ -11,11 +11,9 @@ import { logout } from "../../redux/features/authSlice";
 
 export function Navbar() {
   const { authToken, user } = useSelector((state) => state.auth);
+  const { data: wishlist } = useSelector((state) => state.wishlist);
   const [showDropdown, setShowDropdown] = useState(false);
   const dispatch = useDispatch();
-  const {
-    wishlistState: { data: wishlist },
-  } = useWishList();
 
   const {
     cartState: { data: cart },
