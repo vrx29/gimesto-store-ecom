@@ -5,12 +5,18 @@ import xboxImg from "../../assets/banner-images/xbox-controller.png";
 import vrImg from "../../assets/banner-images/vr.png";
 import { useProducts } from "../../context";
 import { createSearchParams, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getProducts } from "../../redux/features/productSlice";
 
 export function Home() {
   const navigate = useNavigate();
-  const { productState } = useProducts();
-  const { data: products, loading } = productState;
+  const { data: products, loading } = useSelector((state) => state.product);
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getProducts());
+  }, []);
   const goToPosts = (params) =>
     navigate({
       pathname: "/products",

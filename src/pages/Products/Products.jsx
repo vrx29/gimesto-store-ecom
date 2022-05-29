@@ -1,13 +1,20 @@
 import "./products.css";
 import { Loader, ProductCard } from "../../components";
 import { Filters } from "./components";
-import { useProducts } from "../../context";
 import { useFilterProducts } from "../../hooks";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getProducts } from "../../redux/features/productSlice";
 
 export function Products() {
-  const { productState } = useProducts();
-  const { data: products, loading } = productState;
+  const { data: products, loading } = useSelector((state) => state.product);
   const filteredData = useFilterProducts(products);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProducts());
+  }, []);
+
   return (
     <main className="shop-section">
       <aside className="filters-container">

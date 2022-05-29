@@ -5,19 +5,16 @@ import avatar from "../../assets/avatars/avataaars.png";
 import { GimestoLogo } from "../../assets/logo/logo";
 import { Link } from "react-router-dom";
 import { DropdownMenu } from "../Dropdown";
-import { useCart, useWishList } from "../../context";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/features/authSlice";
 
 export function Navbar() {
   const { authToken, user } = useSelector((state) => state.auth);
   const { data: wishlist } = useSelector((state) => state.wishlist);
+  const { data: cart } = useSelector((state) => state.cart);
   const [showDropdown, setShowDropdown] = useState(false);
   const dispatch = useDispatch();
 
-  const {
-    cartState: { data: cart },
-  } = useCart();
 
   return (
     <header className="navbar">
@@ -36,14 +33,14 @@ export function Navbar() {
         </Link>
         <Link to="wishlist" className="badge">
           <WishListIcon />
-          {authToken && wishlist.length !== 0 && (
+          {authToken && wishlist?.length !== 0 && (
             <div className="badge-count">{wishlist.length}</div>
           )}
           <span>Wishlist</span>
         </Link>
         <Link to="/cart" className="badge">
           <CartIcon />
-          {authToken && cart.length !== 0 && (
+          {authToken && cart?.length !== 0 && (
             <div className="badge-count badge-cart">{cart.length}</div>
           )}
           <span>Cart</span>

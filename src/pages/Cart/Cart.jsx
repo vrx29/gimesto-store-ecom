@@ -1,6 +1,5 @@
 import React from "react";
 import "./cart.css";
-import { useCart } from "../../context";
 import { CartCard } from "./components";
 import cartEmpty from "../../assets/fallback/empty-cart.png";
 import {
@@ -8,11 +7,10 @@ import {
   getCartTotal,
   getDiscountedTotal,
 } from "../../utils/generalUtils";
+import { useSelector } from "react-redux";
 
 export function Cart() {
-  const {
-    cartState: { data: cartItems },
-  } = useCart();
+  const { data: cartItems } = useSelector((state) => state.cart);
   const cartPrice = getCartPrice(cartItems);
   const cartDiscount = getDiscountedTotal(cartItems);
   const cartTotal = getCartTotal(cartItems);

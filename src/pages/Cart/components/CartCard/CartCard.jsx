@@ -1,7 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { HeartIcon } from "../../../../assets/icons";
-import { useCartHandler } from "../../../../hooks";
+import {
+  deleteFromCart,
+  updateCart,
+} from "../../../../redux/features/cartSlice";
 import {
   addToWishlist,
   deleteFromWishlist,
@@ -10,7 +13,6 @@ import { calcDiscount } from "../../../../utils/generalUtils";
 
 export function CartCard({ product }) {
   const { _id, img, brand, name, discountedPrice, price, qty } = product;
-  const { deleteFromCart, updateCart } = useCartHandler();
   const discount = calcDiscount(price, discountedPrice);
   const { data: wishlist } = useSelector((state) => state.wishlist);
   const dispatch = useDispatch();
@@ -33,18 +35,25 @@ export function CartCard({ product }) {
         <div className="cart-item-footer">
           <button
             className="btn btn-qty"
-            onClick={() => updateCart(_id, "decrement")}
+            onClick={() =>
+              dispatch(updateCart({ productId: _id, type: "decrement" }))
+            }
           >
             -
           </button>
           <span>{qty}</span>
           <button
             className="btn btn-qty"
-            onClick={() => updateCart(_id, "increment")}
+            onClick={() =>
+              dispatch(updateCart({ productId: _id, type: "increment" }))
+            }
           >
             +
           </button>
-          <button className="btn outline" onClick={() => deleteFromCart(_id)}>
+          <button
+            className="btn outline"
+            onClick={() => dispatch(deleteFromCart(_id))}
+          >
             Remove from cart
           </button>
 
