@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { HeartIcon } from "../../../../assets/icons";
 import { useCart } from "../../../../context";
@@ -7,6 +8,7 @@ import { calcDiscount } from "../../../../utils/generalUtils";
 
 export function WishlistCard({ item, removeWishlist }) {
   const discount = calcDiscount(item.price, item.discountedPrice);
+  const dispatch = useDispatch();
   const { addToCart } = useCartHandler();
   const {
     cartState: { data: cart },
@@ -33,7 +35,6 @@ export function WishlistCard({ item, removeWishlist }) {
           </div>
         </div>
         <div className="card-footer">
-          {/* <button className="btn btn-primary">ADD TO CART</button> */}
           {cart.some((prod) => prod._id === item._id) ? (
             <Link to="/cart">
               <button className="btn outline">GO TO CART</button>
@@ -45,7 +46,7 @@ export function WishlistCard({ item, removeWishlist }) {
           )}
           <button
             className="btn btn-icon active"
-            onClick={() => removeWishlist(item._id)}
+            onClick={() => dispatch(removeWishlist(item._id))}
           >
             <HeartIcon />
           </button>
