@@ -1,19 +1,61 @@
+import { useEffect, useReducer } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Loader } from "../../components/Loader";
-import { useAuthHandler } from "../../hooks";
+import { initialFormState } from "../../reducers/constants";
+import { formReducer } from "../../reducers/reducerFunctions";
+import { signUp } from "../../redux/features/authSlice";
+import { validateEmail } from "../../utils/generalUtils";
 import "./signup.css";
 
 export function SignUp() {
+  const { authToken } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-  const { formState, handleInputChange, handleSignUpFormSubmit } =
-    useAuthHandler();
+  const [formState, formDispatch] = useReducer(formReducer, initialFormState);
+  const { firstName, lastName, email, password, confirmPassword } = formState;
+
+  useEffect(() => {
+    authToken && navigate(from, { replace: true });
+  }, [authToken]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+
+    formDispatch({
+      type: "SET_FORM_DATA",
+      payload: { [name]: value },
+    });
+  };
+  const setError = (msg) => {
+    formDispatch({
+      type: "SET_FORM_ERROR",
+      payload: msg,
+    });
+
+    setTimeout(() => {
+      formDispatch({
+        type: "SET_FORM_SUCCESS",
+      });
+    }, 2000);
+  };
 
   const signUpHandler = (e) => {
     e.preventDefault();
-    handleSignUpFormSubmit();
-    navigate(from, { replace: true }); //After success send back to previous router from where it was routed here
+    if ([firstName, lastName, email, password, confirmPassword].includes("")) {
+      setError("Please enter data in all input fields");
+    } else if (!validateEmail(email)) {
+      setError("Please enter email in correct format");
+    } else if (password !== confirmPassword) {
+      setError("Confirm Password must be same as Password");
+    } else {
+      dispatch(
+        signUp({ firstName, lastName, email, password, confirmPassword })
+      );
+    }
+    // navigate(from, { replace: true }); //After success send back to previous router from where it was routed here
   };
   return (
     <main>

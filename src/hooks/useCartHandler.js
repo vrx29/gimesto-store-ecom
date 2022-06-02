@@ -1,10 +1,10 @@
 import axios from "axios";
-import { useAuth, useCart } from "../context";
+import { useSelector } from "react-redux";
+import { useCart } from "../context";
 
 export const useCartHandler = () => {
-  const { userAuthState } = useAuth();
+  const { authToken } = useSelector((state) => state.auth);
   const { cartDispatch } = useCart();
-  const { authToken } = userAuthState;
 
   const config = {
     headers: {

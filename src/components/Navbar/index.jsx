@@ -5,16 +5,15 @@ import avatar from "../../assets/avatars/avataaars.png";
 import { GimestoLogo } from "../../assets/logo/logo";
 import { Link } from "react-router-dom";
 import { DropdownMenu } from "../Dropdown";
-import { useAuth, useCart, useWishList } from "../../context";
-import { useAuthHandler } from "../../hooks";
+import { useCart, useWishList } from "../../context";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/features/authSlice";
 
 export function Navbar() {
-  const { userAuthState } = useAuth();
-  const { handleLogout } = useAuthHandler();
+  const { authToken, user } = useSelector((state) => state.auth);
+  const { data: wishlist } = useSelector((state) => state.wishlist);
   const [showDropdown, setShowDropdown] = useState(false);
-  const {
-    wishlistState: { data: wishlist },
-  } = useWishList();
+  const dispatch = useDispatch();
 
   const {
     cartState: { data: cart },
@@ -37,28 +36,28 @@ export function Navbar() {
         </Link>
         <Link to="wishlist" className="badge">
           <WishListIcon />
-          {userAuthState?.isLoggedIn && wishlist.length !== 0 && (
+          {authToken && wishlist.length !== 0 && (
             <div className="badge-count">{wishlist.length}</div>
           )}
           <span>Wishlist</span>
         </Link>
         <Link to="/cart" className="badge">
           <CartIcon />
-          {userAuthState?.isLoggedIn && cart.length !== 0 && (
+          {authToken && cart.length !== 0 && (
             <div className="badge-count badge-cart">{cart.length}</div>
           )}
           <span>Cart</span>
         </Link>
-        {userAuthState?.isLoggedIn ? (
+        {authToken ? (
           <>
             <div className="profile" onClick={() => setShowDropdown(true)}>
               <img className="avatar avatar-xs" src={avatar} alt="avatar" />
-              <span>{userAuthState.user}</span>
+              <span>{user}</span>
               {showDropdown && (
                 <DropdownMenu
                   show={showDropdown}
                   onClickOutside={() => setShowDropdown(false)}
-                  logout={handleLogout}
+                  logout={() => dispatch(logout())}
                 />
               )}
             </div>

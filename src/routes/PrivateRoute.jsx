@@ -1,12 +1,12 @@
 import React from "react";
-import { Navigate, Route, useLocation } from "react-router-dom";
-import { useAuth } from "../context";
+import { useSelector } from "react-redux";
+import { Navigate, useLocation } from "react-router-dom";
 
 export function PrivateRoute({ children }) {
-  const { userAuthState } = useAuth();
+  const { authToken } = useSelector((state) => state.auth);
   let location = useLocation();
 
-  if (userAuthState?.isLoggedIn) {
+  if (authToken) {
     return children;
   }
 

@@ -1,26 +1,47 @@
-import React from "react";
+import React, { useReducer } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./login.css";
-import { useAuthHandler } from "../../hooks";
 import { Loader } from "../../components/Loader";
 import { useEffect } from "react";
-import { useAuth } from "../../context";
+import { useDispatch, useSelector } from "react-redux";
+import { formReducer } from "../../reducers/reducerFunctions";
+import { initialFormState } from "../../reducers/constants";
+import { login } from "../../redux/features/authSlice";
+import { validateEmail } from "../../utils/generalUtils";
 
 export function Login() {
-  const { userAuthState } = useAuth();
+  const { authToken } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from.pathname || "/";
-  const {
-    formState,
-    handleLoginFormSubmit,
-    handleInputChange,
-    setUpTestLogin,
-  } = useAuthHandler();
+  const [formState, formDispatch] = useReducer(formReducer, initialFormState);
+  const { email, password } = formState;
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+
+    formDispatch({
+      type: "SET_FORM_DATA",
+      payload: { [name]: value },
+    });
+  };
+  const setError = (msg) => {
+    formDispatch({
+      type: "SET_FORM_ERROR",
+      payload: msg,
+    });
+
+    setTimeout(() => {
+      formDispatch({
+        type: "SET_FORM_SUCCESS",
+      });
+    }, 2000);
+  };
 
   useEffect(() => {
-    userAuthState.isLoggedIn && navigate(from, { replace: true });
-  }, []);
+    authToken && navigate(from, { replace: true });
+  }, [authToken]);
 
   useEffect(() => {
     if (formState.success) {
@@ -30,9 +51,21 @@ export function Login() {
 
   const loginHandler = (e) => {
     e.preventDefault();
-    handleLoginFormSubmit();
+    if ([email, password].includes("")) {
+      setError("Please enter data in all input fields");
+    } else if (!validateEmail(email)) {
+      setError("Please enter email in correct format");
+    } else {
+      dispatch(login({ email, password }));
+    }
   };
-
+  const setUpTestLogin = (e) => {
+    e.preventDefault();
+    formDispatch({
+      type: "SET_FORM_DATA",
+      payload: { email: "vineet@gmail.com", password: "vineet123" },
+    });
+  };
   return (
     <main>
       <div className="auth-cont">
