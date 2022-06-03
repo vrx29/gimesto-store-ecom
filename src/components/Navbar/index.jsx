@@ -5,6 +5,7 @@ import avatar from "../../assets/avatars/avataaars.png";
 import { GimestoLogo } from "../../assets/logo/logo";
 import { Link } from "react-router-dom";
 import { DropdownMenu } from "../Dropdown";
+import { useCart, useWishList } from "../../context";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/features/authSlice";
 
@@ -33,7 +34,11 @@ export function Navbar() {
         </Link>
         <Link to="wishlist" className="badge">
           <WishListIcon />
+<<<<<<< HEAD
           {authToken && wishlist?.length !== 0 && (
+=======
+          {authToken && wishlist.length !== 0 && (
+>>>>>>> dev
             <div className="badge-count">{wishlist.length}</div>
           )}
           <span>Wishlist</span>

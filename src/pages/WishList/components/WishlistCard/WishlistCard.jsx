@@ -9,7 +9,6 @@ export function WishlistCard({ item, removeWishlist }) {
   const { data: cart } = useSelector((state) => state.cart);
   const discount = calcDiscount(item.price, item.discountedPrice);
   const dispatch = useDispatch();
-
   return (
     <div className="card card-ecom card-horiz">
       <div className="card-img-cont">
