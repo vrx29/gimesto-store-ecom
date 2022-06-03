@@ -1,18 +1,14 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { HeartIcon } from "../../../../assets/icons";
-import { useCart } from "../../../../context";
-import { useCartHandler } from "../../../../hooks";
+import { addToCart } from "../../../../redux/features/cartSlice";
 import { calcDiscount } from "../../../../utils/generalUtils";
 
 export function WishlistCard({ item, removeWishlist }) {
+  const { data: cart } = useSelector((state) => state.cart);
   const discount = calcDiscount(item.price, item.discountedPrice);
   const dispatch = useDispatch();
-  const { addToCart } = useCartHandler();
-  const {
-    cartState: { data: cart },
-  } = useCart();
   return (
     <div className="card card-ecom card-horiz">
       <div className="card-img-cont">
@@ -40,7 +36,10 @@ export function WishlistCard({ item, removeWishlist }) {
               <button className="btn outline">GO TO CART</button>
             </Link>
           ) : (
-            <button className="btn btn-primary" onClick={() => addToCart(item)}>
+            <button
+              className="btn btn-primary"
+              onClick={() => dispatch(addToCart(item))}
+            >
               ADD TO CART
             </button>
           )}

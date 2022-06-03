@@ -2,8 +2,6 @@ import React from "react";
 import "./product-card.css";
 import { HeartIcon } from "../../assets/icons";
 import PropTypes from "prop-types";
-import { useCart } from "../../context";
-import { useCartHandler } from "../../hooks";
 import { Link } from "react-router-dom";
 import { calcDiscount } from "../../utils/generalUtils";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,14 +9,12 @@ import {
   addToWishlist,
   deleteFromWishlist,
 } from "../../redux/features/wishlistSlice";
+import { addToCart } from "../../redux/features/cartSlice";
 
 export function ProductCard({ product }) {
   const { data: wishlist } = useSelector((state) => state.wishlist);
+  const { data: cart } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-  const {
-    cartState: { data: cart },
-  } = useCart();
-  const { addToCart } = useCartHandler();
   const discount = calcDiscount(product.price, product.discountedPrice);
   return (
     <div className="card card-ecom">
@@ -37,14 +33,14 @@ export function ProductCard({ product }) {
           </div>
         </div>
         <div className="card-footer">
-          {cart.some((item) => item._id === product._id) ? (
+          {cart?.some((item) => item._id === product._id) ? (
             <Link to="/cart">
               <button className="btn outline">GO TO CART</button>
             </Link>
           ) : (
             <button
               className="btn btn-primary"
-              onClick={() => addToCart(product)}
+              onClick={() => dispatch(addToCart(product))}
             >
               ADD TO CART
             </button>
