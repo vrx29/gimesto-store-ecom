@@ -1,5 +1,5 @@
-import { createContext, useContext, useReducer } from "react";
-import {  useSearchParams } from "react-router-dom";
+import { createContext, useContext, useReducer, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { initialFilterState } from "../reducers/constants/initialFilterState";
 import { filterReducer } from "../reducers/reducerFunctions/filterReducer";
 import { getFilterStateFromParams } from "../utils/filterUtils/getFilterStateFromParams";

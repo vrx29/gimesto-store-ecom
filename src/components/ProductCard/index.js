@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import "./product-card.css";
 import { HeartIcon } from "../../assets/icons";
 import PropTypes from "prop-types";
@@ -10,12 +10,26 @@ import {
   deleteFromWishlist,
 } from "../../redux/features/wishlistSlice";
 import { addToCart } from "../../redux/features/cartSlice";
+import { throttle } from "../../utils/throttling/throttle";
 
 export function ProductCard({ product }) {
   const { data: wishlist } = useSelector((state) => state.wishlist);
   const { data: cart } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const discount = calcDiscount(product.price, product.discountedPrice);
+
+  const addToCartThrottled = useMemo(
+    () => throttle(() => dispatch(addToCart(product))),
+    []
+  );
+  const addToWishlistThrottled = useMemo(
+    () => throttle(() => dispatch(addToWishlist(product))),
+    []
+  );
+  const deleteFromWishlistThrottled = useMemo(
+    () => throttle(() => dispatch(deleteFromWishlist(product._id))),
+    []
+  );
   return (
     <div className="card card-ecom">
       <div className="card-img-cont">
@@ -38,10 +52,7 @@ export function ProductCard({ product }) {
               <button className="btn outline">GO TO CART</button>
             </Link>
           ) : (
-            <button
-              className="btn btn-primary"
-              onClick={() => dispatch(addToCart(product))}
-            >
+            <button className="btn btn-primary" onClick={addToCartThrottled}>
               ADD TO CART
             </button>
           )}
@@ -49,15 +60,12 @@ export function ProductCard({ product }) {
           {wishlist?.some((prod) => prod._id === product._id) ? (
             <button
               className="btn btn-icon active"
-              onClick={() => dispatch(deleteFromWishlist(product._id))}
+              onClick={deleteFromWishlistThrottled}
             >
               <HeartIcon />
             </button>
           ) : (
-            <button
-              className="btn btn-icon"
-              onClick={() => dispatch(addToWishlist(product))}
-            >
+            <button className="btn btn-icon" onClick={addToWishlistThrottled}>
               <HeartIcon />
             </button>
           )}

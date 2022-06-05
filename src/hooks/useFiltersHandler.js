@@ -1,6 +1,5 @@
 import { createSearchParams, useSearchParams } from "react-router-dom";
 import { useFilter } from "../context/filterContext";
-import { initialFilterState } from "../reducers/constants/initialFilterState";
 
 export const useFiltersHandler = () => {
   const { filterState, filterDispatch } = useFilter();
@@ -62,7 +61,17 @@ export const useFiltersHandler = () => {
     );
   };
 
-  const handeClearFilter = (e) => {
+  const handleSearchQuery = (e) => {
+    filterDispatch({
+      type: "FILTER_BY_SEARCH_QUERY",
+      payload: e.target.value,
+    });
+    setSearchParams(
+      createSearchParams({ ...filterState, searchQuery: e.target.value })
+    );
+  };
+
+  const handeClearFilter = () => {
     filterDispatch({ type: "CLEAR_FILTERS" });
     setSearchParams();
   };
@@ -73,6 +82,7 @@ export const useFiltersHandler = () => {
     handleRating,
     handleSorting,
     handeClearFilter,
+    handleSearchQuery,
   };
 
   return filterHandlers;

@@ -2,6 +2,11 @@ import { initialFilterState } from "../constants/initialFilterState";
 
 export const filterReducer = (state, { type, payload }) => {
   switch (type) {
+    case "FILTER_BY_SEARCH_QUERY":
+      const newState = { ...state, searchQuery: payload };
+      // console.log(newS);
+      return newState;
+    // return { ...state, searchQuery: payload };
     case "FILTER_BY_RATING":
       return { ...state, rating: payload };
     case "FILTER_BY_SORT":

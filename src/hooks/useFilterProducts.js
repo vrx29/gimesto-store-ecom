@@ -10,7 +10,15 @@ import {
 export const useFilterProducts = (products) => {
   let data = [...products];
   const { filterState } = useFilter();
-  const { categories, sortBy, priceLow, priceHigh, rating } = filterState;
+  const { categories, sortBy, priceLow, priceHigh, rating, searchQuery } =
+    filterState;
+
+  if (searchQuery.length > 0) {
+    data = data.filter((item) => {
+      const inputStr = item.name;
+      return inputStr.startsWith(searchQuery);
+    });
+  }
 
   if (sortBy === "PRICE_LOW_TO_HIGH") {
     data = sortIncreasing(data);

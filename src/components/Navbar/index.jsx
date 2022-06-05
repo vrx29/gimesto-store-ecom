@@ -5,17 +5,19 @@ import avatar from "../../assets/avatars/avataaars.png";
 import { GimestoLogo } from "../../assets/logo/logo";
 import { Link } from "react-router-dom";
 import { DropdownMenu } from "../Dropdown";
-import { useCart, useWishList } from "../../context";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/features/authSlice";
+import { useFilter } from "../../context";
+import { useFiltersHandler } from "../../hooks";
 
 export function Navbar() {
   const { authToken, user } = useSelector((state) => state.auth);
   const { data: wishlist } = useSelector((state) => state.wishlist);
   const { data: cart } = useSelector((state) => state.cart);
+  const { filterState } = useFilter();
+  const { handleSearchQuery } = useFiltersHandler();
   const [showDropdown, setShowDropdown] = useState(false);
   const dispatch = useDispatch();
-
 
   return (
     <header className="navbar">
@@ -25,7 +27,13 @@ export function Navbar() {
         </Link>
       </div>
       <div className="search-cont">
-        <input className="input" type="email" placeholder="Search" />
+        <input
+          className="input"
+          type="text"
+          placeholder="Search"
+          value={filterState.searchQuery}
+          onChange={handleSearchQuery}
+        />
       </div>
       <nav className="nav-links">
         <Link to="products">
@@ -34,11 +42,7 @@ export function Navbar() {
         </Link>
         <Link to="wishlist" className="badge">
           <WishListIcon />
-<<<<<<< HEAD
           {authToken && wishlist?.length !== 0 && (
-=======
-          {authToken && wishlist.length !== 0 && (
->>>>>>> dev
             <div className="badge-count">{wishlist.length}</div>
           )}
           <span>Wishlist</span>

@@ -4,6 +4,11 @@ const paramsReducer = (filterState, currParam) => {
   const [key, val] = currParam;
 
   switch (key) {
+    case "searchQuery":
+      return {
+        ...filterState,
+        searchQuery: val,
+      };
     case "sortBy":
       return {
         ...filterState,
