@@ -4,7 +4,7 @@ import { useFilter } from "../context/filterContext";
 export const useFiltersHandler = () => {
   const { filterState, filterDispatch } = useFilter();
   const { categories, priceLow, priceHigh } = filterState;
-  const [_, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleRating = (e) => {
     filterDispatch({
@@ -64,11 +64,10 @@ export const useFiltersHandler = () => {
   const handleSearchQuery = (e) => {
     filterDispatch({
       type: "FILTER_BY_SEARCH_QUERY",
-      payload: e.target.value,
+      payload: e,
     });
-    setSearchParams(
-      createSearchParams({ ...filterState, searchQuery: e.target.value })
-    );
+
+    setSearchParams(createSearchParams({ ...filterState, searchQuery: e }));
   };
 
   const handeClearFilter = () => {

@@ -5,15 +5,11 @@ import { useFilterProducts } from "../../hooks";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getProducts } from "../../redux/features/productSlice";
-import { useFilter } from "../../context";
 
 export function Products() {
   const { data: products, loading } = useSelector((state) => state.product);
-  const filteredData = useFilterProducts(products);
+  let filteredData = useFilterProducts(products);
   const dispatch = useDispatch();
-  const { filterState } = useFilter();
-
-  console.log(filterState);
 
   useEffect(() => {
     dispatch(getProducts());

@@ -4,7 +4,7 @@ import { initialFilterState } from "../reducers/constants/initialFilterState";
 import { filterReducer } from "../reducers/reducerFunctions/filterReducer";
 import { getFilterStateFromParams } from "../utils/filterUtils/getFilterStateFromParams";
 
-const filterContext = createContext(initialFilterState);
+const FilterContext = createContext(initialFilterState);
 
 const FilterProvider = ({ children }) => {
   const [searchParams] = useSearchParams();
@@ -12,14 +12,14 @@ const FilterProvider = ({ children }) => {
     filterReducer,
     getFilterStateFromParams(searchParams)
   );
-
+  
   return (
-    <filterContext.Provider value={{ filterState, filterDispatch }}>
+    <FilterContext.Provider value={{ filterState, filterDispatch }}>
       {children}
-    </filterContext.Provider>
+    </FilterContext.Provider>
   );
 };
 
-const useFilter = () => useContext(filterContext);
+const useFilter = () => useContext(FilterContext);
 
 export { FilterProvider, useFilter };

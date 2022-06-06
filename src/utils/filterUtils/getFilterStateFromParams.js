@@ -4,11 +4,6 @@ const paramsReducer = (filterState, currParam) => {
   const [key, val] = currParam;
 
   switch (key) {
-    case "searchQuery":
-      return {
-        ...filterState,
-        searchQuery: val,
-      };
     case "sortBy":
       return {
         ...filterState,
@@ -33,6 +28,11 @@ const paramsReducer = (filterState, currParam) => {
       return {
         ...filterState,
         priceHigh: [...filterState.priceHigh, Number(val)],
+      };
+    case "searchQuery":
+      return {
+        ...filterState,
+        searchQuery: val,
       };
     default:
       return {

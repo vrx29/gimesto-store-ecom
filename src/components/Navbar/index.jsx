@@ -8,16 +8,26 @@ import { DropdownMenu } from "../Dropdown";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/features/authSlice";
 import { useFilter } from "../../context";
-import { useFiltersHandler } from "../../hooks";
+import { useFiltersHandler } from "../../hooks/useFiltersHandler";
+import { debounce } from "../../utils/debounce/debounce";
 
 export function Navbar() {
   const { authToken, user } = useSelector((state) => state.auth);
   const { data: wishlist } = useSelector((state) => state.wishlist);
   const { data: cart } = useSelector((state) => state.cart);
-  const { filterState } = useFilter();
-  const { handleSearchQuery } = useFiltersHandler();
   const [showDropdown, setShowDropdown] = useState(false);
   const dispatch = useDispatch();
+  const {
+    filterState: { searchQuery },
+  } = useFilter();
+  const [searchData, setSearchData] = useState(searchQuery);
+  const { handleSearchQuery } = useFiltersHandler();
+  const debouncedSearch = debounce(handleSearchQuery, 300);
+
+  const setData = (e) => {
+    setSearchData(e.target.value);
+    debouncedSearch(e.target.value);
+  };
 
   return (
     <header className="navbar">
@@ -31,8 +41,8 @@ export function Navbar() {
           className="input"
           type="text"
           placeholder="Search"
-          value={filterState.searchQuery}
-          onChange={handleSearchQuery}
+          value={searchData}
+          onChange={setData}
         />
       </div>
       <nav className="nav-links">
