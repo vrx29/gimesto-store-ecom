@@ -4,3 +4,4 @@ export { filterCategories } from "./filterCategories";
 export { getFilterStateFromParams } from "./getFilterStateFromParams";
 export { sortDecreasing } from "./sortDecreasing";
 export { sortIncreasing } from "./sortIncreasing";
+export { searchByQuery } from "./searchByQuery";

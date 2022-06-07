@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { HeartIcon } from "../../../../assets/icons";
 import { addToCart } from "../../../../redux/features/cartSlice";
 import { calcDiscount } from "../../../../utils/generalUtils";
+import { throttle } from "../../../../utils/throttling/throttle";
 
 export function WishlistCard({ item, removeWishlist }) {
   const { data: cart } = useSelector((state) => state.cart);
   const discount = calcDiscount(item.price, item.discountedPrice);
   const dispatch = useDispatch();
+  const addToCartThrottled = useMemo(
+    () => throttle(() => dispatch(addToCart(item))),
+    []
+  );
   return (
     <div className="card card-ecom card-horiz">
       <div className="card-img-cont">
@@ -36,10 +41,7 @@ export function WishlistCard({ item, removeWishlist }) {
               <button className="btn outline">GO TO CART</button>
             </Link>
           ) : (
-            <button
-              className="btn btn-primary"
-              onClick={() => dispatch(addToCart(item))}
-            >
+            <button className="btn btn-primary" onClick={addToCartThrottled}>
               ADD TO CART
             </button>
           )}

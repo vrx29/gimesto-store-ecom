@@ -3,6 +3,7 @@ import {
   filterByPriceRange,
   filterByRating,
   filterCategories,
+  searchByQuery,
   sortDecreasing,
   sortIncreasing,
 } from "../utils/filterUtils";
@@ -10,11 +11,18 @@ import {
 export const useFilterProducts = (products) => {
   let data = [...products];
   const { filterState } = useFilter();
-  const { categories, sortBy, priceLow, priceHigh, rating } = filterState;
+
+  const { categories, sortBy, priceLow, priceHigh, rating, searchQuery } =
+    filterState;
+
+  if (searchQuery.length > 0) {
+    data = searchByQuery(data, searchQuery);
+  }
 
   if (sortBy === "PRICE_LOW_TO_HIGH") {
     data = sortIncreasing(data);
   }
+
   if (sortBy === "PRICE_HIGH_TO_LOW") {
     data = sortDecreasing(data);
   }

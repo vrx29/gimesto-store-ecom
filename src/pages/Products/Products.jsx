@@ -8,7 +8,7 @@ import { getProducts } from "../../redux/features/productSlice";
 
 export function Products() {
   const { data: products, loading } = useSelector((state) => state.product);
-  const filteredData = useFilterProducts(products);
+  let filteredData = useFilterProducts(products);
   const dispatch = useDispatch();
 
   useEffect(() => {

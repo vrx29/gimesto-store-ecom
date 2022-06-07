@@ -29,6 +29,11 @@ const paramsReducer = (filterState, currParam) => {
         ...filterState,
         priceHigh: [...filterState.priceHigh, Number(val)],
       };
+    case "searchQuery":
+      return {
+        ...filterState,
+        searchQuery: val,
+      };
     default:
       return {
         ...filterState,

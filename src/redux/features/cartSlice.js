@@ -1,3 +1,4 @@
+import { betterDispatch } from "../../utils/throttling/throttle";
 import {
   addToCartService,
   deleteFromCartService,
