@@ -10,6 +10,7 @@ import {
   SignUp,
   Login,
   MockmanPage,
+  Account,
 } from "./pages";
 import { FilterProvider } from "./context";
 import { PrivateRoute } from "./routes/PrivateRoute";
@@ -37,6 +38,14 @@ function App() {
           element={
             <PrivateRoute>
               <Cart />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/account"
+          element={
+            <PrivateRoute>
+              <Account />
             </PrivateRoute>
           }
         />

@@ -3,7 +3,7 @@ import "./navbar.css";
 import { CartIcon, MenuIcon, ShopIcon, WishListIcon } from "../../assets/icons";
 import avatar from "../../assets/avatars/avataaars.png";
 import { GimestoLogo } from "../../assets/logo/logo";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { DropdownMenu } from "../Dropdown";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/features/authSlice";
@@ -16,6 +16,7 @@ export function Navbar() {
   const { data: wishlist } = useSelector((state) => state.wishlist);
   const { data: cart } = useSelector((state) => state.cart);
   const [showDropdown, setShowDropdown] = useState(false);
+  const { pathname } = useLocation();
   const dispatch = useDispatch();
   const {
     filterState: { searchQuery },
@@ -36,15 +37,17 @@ export function Navbar() {
           <GimestoLogo />
         </Link>
       </div>
-      <div className="search-cont">
-        <input
-          className="input"
-          type="text"
-          placeholder="Search"
-          value={searchData}
-          onChange={setData}
-        />
-      </div>
+      {pathname === "/products" && (
+        <div className="search-cont">
+          <input
+            className="input"
+            type="text"
+            placeholder="Search"
+            value={searchData}
+            onChange={setData}
+          />
+        </div>
+      )}
       <nav className="nav-links">
         <Link to="products">
           <ShopIcon />

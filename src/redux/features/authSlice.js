@@ -1,6 +1,8 @@
 import { deleteCookie, getCookie, setCookie } from "../utiles/cookiesHandler";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { loginService, signupService } from "../services/authServices";
+import { resetCart } from "./cartSlice";
+import { resetWishlist } from "./wishlistSlice";
 
 const initialState = {
   loading: false,
@@ -52,10 +54,12 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    logout: (state) => {
+    logout: (state, dispatch) => {
       deleteCookie();
       state.authToken = null;
       state.user = null;
+      dispatch(resetCart);
+      dispatch(resetWishlist);
     },
   },
   extraReducers: {
