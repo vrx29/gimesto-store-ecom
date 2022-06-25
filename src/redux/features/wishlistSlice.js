@@ -46,6 +46,9 @@ const deleteFromWishlist = createAsyncThunk(
 const wishlistSlice = createSlice({
   name: "wishlist",
   initialState,
+  reducers: {
+    resetWishlist: () => initialState,
+  },
   extraReducers: {
     [addToWishlist.pending]: (state) => {
       state.loading = true;
@@ -74,5 +77,5 @@ const wishlistSlice = createSlice({
 
 const { reducer, actions } = wishlistSlice;
 export default reducer;
-// export const { logout } = actions;
+export const { resetWishlist } = actions;
 export { addToWishlist, deleteFromWishlist };

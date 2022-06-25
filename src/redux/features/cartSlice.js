@@ -71,6 +71,9 @@ const updateCart = createAsyncThunk(
 const cartSlice = createSlice({
   name: "cart",
   initialState,
+  reducers: {
+    resetCart: () => initialState,
+  },
   extraReducers: {
     [addToCart.pending]: (state) => {
       state.loading = true;
@@ -110,4 +113,5 @@ const cartSlice = createSlice({
 
 const { reducer, actions } = cartSlice;
 export default reducer;
+export const { resetCart } = actions;
 export { addToCart, deleteFromCart, updateCart };

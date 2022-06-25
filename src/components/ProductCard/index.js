@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import "./product-card.css";
 import { HeartIcon } from "../../assets/icons";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { calcDiscount } from "../../utils/generalUtils";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -15,9 +15,10 @@ import { throttle } from "../../utils/throttling/throttle";
 export function ProductCard({ product }) {
   const { data: wishlist } = useSelector((state) => state.wishlist);
   const { data: cart } = useSelector((state) => state.cart);
+  const { authToken } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const discount = calcDiscount(product.price, product.discountedPrice);
-
+  const navigate = useNavigate();
   const addToCartThrottled = useMemo(
     () => throttle(() => dispatch(addToCart(product))),
     []
@@ -52,7 +53,12 @@ export function ProductCard({ product }) {
               <button className="btn outline">GO TO CART</button>
             </Link>
           ) : (
-            <button className="btn btn-primary" onClick={addToCartThrottled}>
+            <button
+              className="btn btn-primary"
+              onClick={() =>
+                authToken ? addToCartThrottled() : navigate("/login")
+              }
+            >
               ADD TO CART
             </button>
           )}
@@ -65,7 +71,12 @@ export function ProductCard({ product }) {
               <HeartIcon />
             </button>
           ) : (
-            <button className="btn btn-icon" onClick={addToWishlistThrottled}>
+            <button
+              className="btn btn-icon"
+              onClick={() =>
+                authToken ? addToWishlistThrottled() : navigate("/login")
+              }
+            >
               <HeartIcon />
             </button>
           )}
